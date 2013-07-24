@@ -6,7 +6,7 @@ from django.conf.urls import patterns, include, url
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^$', 'jarvis.views.home', name='home'),
+    url(r'^$', 'chrome.views.home', name='home')
     # url(r'^jarvis/', include('jarvis.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
