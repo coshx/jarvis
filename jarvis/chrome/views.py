@@ -1,4 +1,7 @@
 from django.http import HttpResponse
+from django.template import RequestContext, loader
 
 def home(request):
-    return HttpResponse("Hello, world. You're at the index.")
+    template = loader.get_template('chrome/index.html')
+    context = RequestContext(request)
+    return HttpResponse(template.render(context))
