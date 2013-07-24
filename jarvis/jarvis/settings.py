@@ -1,5 +1,6 @@
 import os
 BASE_DIR = path = os.path.abspath(os.path.join(os.path.dirname(__file__),".."))
+ABSOLUTE_PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 
 # Django settings for jarvis project.
 
@@ -71,7 +72,9 @@ STATIC_ROOT = ''
 STATIC_URL = '/static/'
 
 # Additional locations of static files
+print os.path.abspath(os.path.join(ABSOLUTE_PROJECT_ROOT, 'staticfiles/'))
 STATICFILES_DIRS = (
+    os.path.abspath(os.path.join(ABSOLUTE_PROJECT_ROOT, 'staticfiles/')),
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.

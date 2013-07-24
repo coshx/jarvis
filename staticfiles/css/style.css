@@ -61,12 +61,12 @@ body {
 }
 
 .speech-mic {
-    background: url("mic.gif") no-repeat 50% 50%;
+    background: url("../img/mic.gif") no-repeat 50% 50%;
     background-size: contain;
 }
 
 .speech-mic-works {
-    background: url("mic-animate.gif") no-repeat 50% 50%;
+    background: url("../img/mic-animate.gif") no-repeat 50% 50%;
     background-size: contain;
 }
 
