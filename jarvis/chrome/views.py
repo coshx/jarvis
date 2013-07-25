@@ -22,9 +22,9 @@ def process_command(request):
         print input + " is not a command"
         return HttpResponse({}, content_type="application/json")
 
-    command = CommandProcessor.extractCommand(input)
-    print command
-    if command == "weather":
+    extractedCommand = CommandProcessor.extractCommand(input)
+    print extractedCommand
+    if extractedCommand["command"] == "weather":
         weatherData = urllib2.urlopen("http://api.openweathermap.org/data/2.5/find?q=Boulder,co&units=imperial").read()
         weatherData_temp = json.loads(weatherData)['list'][0]['main']['temp']
         response_data = {'speak': 'It is ' + str(weatherData_temp) + ' degrees outside'}

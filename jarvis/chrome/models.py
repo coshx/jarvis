@@ -12,12 +12,18 @@ class CommandProcessor(models.Model):
     
     # entities = CommandProcessor.entities(command)
     entities = command.split(' ')
+    
+    #check for music
+    if entities[0] == "play"
+      
+
+    #check for weather
     for entity in entities:
       print entity
       if entity == "weather":
-        return "weather"
+        return {"command": "weather"}
 
-    return "unknown"
+    return {"command: unknown"}
   
   @staticmethod
   def isCommand(command):
