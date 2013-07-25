@@ -7,6 +7,11 @@ def home(request):
   template = loader.get_template('chrome/index.html')
   context = RequestContext(request)
   return HttpResponse(template.render(context))
+  
+def textToSpeechTest(request):
+    template = loader.get_template('chrome/texttospeech_test.html')
+    context = RequestContext(request)
+    return HttpResponse(template.render(context))
 
 def process_command(request):
     # lots of real logic needed here. Stuff is going to need to be extracted from here eventually...

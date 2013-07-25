@@ -1,0 +1,12 @@
+<html>
+	<head>
+    	<script type="text/javascript" src="{{ STATIC_URL }}js/speakGenerator.js"></script>
+   		<script type="text/javascript" src="{{ STATIC_URL }}js/speakClient.js"></script>
+    	<script type="text/javascript" src="{{ STATIC_URL }}js/speakWorker.js"></script>
+	</head>
+	<body>
+		<div id="audio"></div>
+		<input type="text" id="speechInputText" />
+		<input type="button" onclick="speak(document.getElementById('speechInputText').value,{noWorker:true})" value="Say 'Hello World!'" />
+	</body>
+</html>
