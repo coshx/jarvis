@@ -27,18 +27,21 @@
                 
                 $.ajax({
                     type: "GET",
-                    url: "process_command",
+                    url: "process_command/",
                     data: {q: command}
                 }).done(function(response) {
-                    console.dir(response);
                     $("#speech-page-content").val("")
-                    insertAtCaret(textAreaID, response["response"]);
+                    if(response["speak"].length > 0){
+                        speak(response["speak"],{noWorker:true});
+                        insertAtCaret(textAreaID, response["speak"]);
+                    }
                 });
             }
         };
 
         recognition.onend = function() {
             console.log("BAD- the recognition ended");
+            recognition.start(); //lets just start it again...NEVER...STOP...LISTENING
         };
     });
 })(jQuery);

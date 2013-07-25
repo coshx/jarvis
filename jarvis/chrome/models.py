@@ -1,5 +1,5 @@
 from django.db import models
-import nltk
+# import nltk
 
 class CommandProcessor(models.Model):
   
@@ -10,9 +10,11 @@ class CommandProcessor(models.Model):
       return False
     command = command.split(' ',1)[1] #removes jarvis from the command
     
-    entities = CommandProcessor.entities(command)
+    # entities = CommandProcessor.entities(command)
+    entities = command.split(' ')
     for entity in entities:
-      if entity[0] == "weather":
+      print entity
+      if entity == "weather":
         return "weather"
 
     return "unknown"
@@ -24,10 +26,10 @@ class CommandProcessor(models.Model):
     else:
       return False
 
-  @staticmethod
-  def entities(command):
-    tokens = nltk.word_tokenize(command)
-    tagged = nltk.pos_tag(tokens)
-    return nltk.chunk.ne_chunk(tagged)
+  # @staticmethod
+  # def entities(command):
+  #   tokens = nltk.word_tokenize(command)
+  #   tagged = nltk.pos_tag(tokens)
+  #   return nltk.chunk.ne_chunk(tagged)
     
 

@@ -16,7 +16,14 @@ def textToSpeechTest(request):
 
 def process_command(request):
     # lots of real logic needed here. Stuff is going to need to be extracted from here eventually...
-    command = CommandProcessor.extractCommand(request.GET['q'])
+    input = request.GET['q'].lstrip()
+
+    if not CommandProcessor.isCommand(input):
+        print input + " is not a command"
+        return HttpResponse({}, content_type="application/json")
+
+    command = CommandProcessor.extractCommand(input)
+    print command
     if command == "weather":
         weatherData = urllib2.urlopen("http://api.openweathermap.org/data/2.5/find?q=Boulder,co&units=imperial").read()
         weatherData_temp = json.loads(weatherData)['list'][0]['main']['temp']
