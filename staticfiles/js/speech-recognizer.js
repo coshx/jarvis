@@ -8,52 +8,37 @@
             var recognition = Object;
         }
         recognition.continuous = true;
-        recognition.interimResults = true;
+        recognition.interimResults = false;
+        recognition.lang = "en";
 
         var interimResult = '';
         var textArea = $('#speech-page-content');
         var textAreaID = 'speech-page-content';
 
-        $('.speech-mic').click(function(){
-            console.log("start");
-            startRecognition();
-        });
-
-        $('.speech-mic-works').click(function(){
-            console.log("stop");
-            recognition.stop();
-        });
-
-        var startRecognition = function() {
-            if( $('.speech-content-mic').attr('class').split(" ")[1] == 'speech-mic-works'){
-                $('.speech-content-mic').removeClass('speech-mic-works').addClass('speech-mic');
-                recognition.stop();
-            }
-            else{
-                $('.speech-content-mic').removeClass('speech-mic').addClass('speech-mic-works');
-                textArea.focus();
-                recognition.start();
-            }
-        };
+        recognition.start();
 
         recognition.onresult = function (event) {
-            var pos = textArea.getCursorPosition() - interimResult.length;
-            textArea.val(textArea.val().replace(interimResult, ''));
-            interimResult = '';
-            textArea.setCursorPosition(pos);
-            for (var i = event.resultIndex; i < event.results.length; ++i) {
-                if (event.results[i].isFinal) {
-                    insertAtCaret(textAreaID, event.results[i][0].transcript);
-                } else {
-                    isFinished = false;
-                    insertAtCaret(textAreaID, event.results[i][0].transcript + '\u200B');
-                    interimResult += event.results[i][0].transcript + '\u200B';
-                }
+            console.log(event);
+            var currentIndex = event.results.length - 1;
+            if(event.results[currentIndex].isFinal){
+                var command = event.results[currentIndex][0].transcript;
+                console.log(command);
+                console.log("confidence: " + event.results[currentIndex][0].confidence);
+                
+                $.ajax({
+                    type: "GET",
+                    url: "process_command",
+                    data: {q: command}
+                }).done(function(response) {
+                    console.dir(response);
+                    $("#speech-page-content").val("")
+                    insertAtCaret(textAreaID, response["response"]);
+                });
             }
         };
 
         recognition.onend = function() {
-            $('.speech-content-mic').removeClass('speech-mic-works').addClass('speech-mic');
+            console.log("BAD- the recognition ended");
         };
     });
 })(jQuery);
