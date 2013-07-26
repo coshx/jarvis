@@ -19,10 +19,10 @@ class CommandProcessor(models.Model):
       entities.pop(0) #remove play
       return {'command': 'play', 'data': urllib.quote(' '.join(entities))}
 
-    if entities[0] == "pause" or entities[0] == "paws" or entities[0] == "popeyes" or entities[0] == "pies":
+    if entities[0] in ["pause", "paws", "popeyes", "Paz", "pies", "pa"]:
       return {'command': 'pause'}
 
-    if entities[0] == "resume" or entities[0] == "play":
+    if entities[0] in ["resume", "play"]:
       return {'command': 'resume'}
 
     #check for weather
@@ -31,11 +31,11 @@ class CommandProcessor(models.Model):
       if entity == "weather":
         return {"command": "weather"}
 
-    return {"command: unknown"}
+    return {"command": "unknown"}
   
   @staticmethod
   def isCommand(command):
-    if command.split(" ")[0].lower() == "travis" or command.split(" ")[0].lower() == "jarvis" or command.split(" ")[0].lower() == "jaris":
+    if command.split(" ")[0].lower() in ["travis", "jarvis", "jaris", "javis"]
       return True
     else:
       return False
