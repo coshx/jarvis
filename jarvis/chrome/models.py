@@ -19,7 +19,7 @@ class CommandProcessor(models.Model):
       entities.pop(0) #remove play
       return {'command': 'play', 'data': urllib.quote(' '.join(entities))}
 
-    if entities[0] == "pause" or entities[0] == "paws":
+    if entities[0] == "pause" or entities[0] == "paws" or entities[0] == "popeyes":
       return {'command': 'pause'}
 
     #check for weather
