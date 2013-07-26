@@ -15,7 +15,7 @@ class CommandProcessor(models.Model):
     entities = command.split(' ')
     
     #check for music
-    if entities[0] == "play" and entities.length > 1:
+    if entities[0] == "play" and len(entities) > 1:
       entities.pop(0) #remove play
       return {'command': 'play', 'data': urllib.quote(' '.join(entities))}
 
