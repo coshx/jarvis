@@ -1,7 +1,6 @@
 (function($) {
-
+	var pop;
     $(document).ready(function() {
-
         try {
             var recognition = new webkitSpeechRecognition();
         } catch(e) {
@@ -24,16 +23,29 @@
                 var command = event.results[currentIndex][0].transcript;
                 console.log(command);
                 console.log("confidence: " + event.results[currentIndex][0].confidence);
-                
                 $.ajax({
                     type: "GET",
                     url: "process_command/",
-                    data: {q: command}
-                }).done(function(response) {
-                    $("#speech-page-content").val("")
-                    if(typeof(response["speak"]) === null && response["speak"].length > 0){
-                        speak(response["speak"],{noWorker:true});
-                        insertAtCaret(textAreaID, response["speak"]);
+                    data: {q: command},
+                    success:function(response) {
+                    	$("#speech-page-content").val("");
+                    	if(typeof(response.speak) !== 'undefined'){
+                    	    speak(response.speak,{noWorker:true});
+                    	    insertAtCaret(textAreaID, response["speak"]);
+                    	} else if (typeof(response.action) !== 'undefined') {
+                    		if (response.action == "youtube" && response.data !== "") {
+                    			var ytubeurl = response.data;
+                    			pop = Popcorn.youtube('#youtube','http://www.youtube.com/watch?v='+ytubeurl);
+                    			pop.play();
+                    		} else if (response.action == "pause") {
+                    			pop.pause();
+                    		} else if (response.action == "resume") {
+                    			pop.play();
+                    		}
+                    	}
+                    },
+                    error:function(data) {
+                    	console.log("Error: " + data);
                     }
                 });
             }
