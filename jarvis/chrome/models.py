@@ -1,4 +1,5 @@
 from django.db import models
+import urllib
 # import nltk
 
 class CommandProcessor(models.Model):
@@ -14,8 +15,9 @@ class CommandProcessor(models.Model):
     entities = command.split(' ')
     
     #check for music
-    if entities[0] == "play"
-      
+    if entities[0] == "play":
+      entities.pop(0) #remove play
+      return {'command': 'play', 'data': urllib.quote(' '.join(entities))}
 
     #check for weather
     for entity in entities:
@@ -37,5 +39,3 @@ class CommandProcessor(models.Model):
   #   tokens = nltk.word_tokenize(command)
   #   tagged = nltk.pos_tag(tokens)
   #   return nltk.chunk.ne_chunk(tagged)
-    
-
