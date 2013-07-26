@@ -35,7 +35,7 @@ class CommandProcessor(models.Model):
   
   @staticmethod
   def isCommand(command):
-    if command.split(" ")[0].lower() in ["travis", "jarvis", "jaris", "javis"]
+    if command.split(" ")[0].lower() in ["travis", "jarvis", "jaris", "javis"]:
       return True
     else:
       return False
