@@ -31,7 +31,7 @@
                     data: {q: command}
                 }).done(function(response) {
                     $("#speech-page-content").val("")
-                    if(response["speak"].length > 0){
+                    if(typeof(response["speak"]) === null && response["speak"].length > 0){
                         speak(response["speak"],{noWorker:true});
                         insertAtCaret(textAreaID, response["speak"]);
                     }
