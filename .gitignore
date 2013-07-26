@@ -1,4 +1,5 @@
 *.pyc
 .project
 .pydevproject
-jarvis_venv/*
+jarvis_venv
+staticfiles
