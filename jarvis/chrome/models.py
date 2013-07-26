@@ -1,8 +1,35 @@
 from django.db import models
-import urllib
+import urllib, wolframalpha
 # import nltk
 
 class CommandProcessor(models.Model):
+  @staticmethod
+  def humanify(result):
+      result = result.split("\/")
+      if len(result) == 1:
+          return result[0]
+      else:
+          newResult = ""
+          for i,r in enumerate(result):
+              if i % 2 == 0:
+                  newResult += r + " "
+              elif r.isdigit():
+                  newResult += "over " + r + " "
+              else:
+                  newResult += "per " + r + " "
+      return newResult
+  
+  @staticmethod
+  def processWolframAlphaResult(result):
+    query_string = ""
+    for idx,rs in enumerate(result.results):
+        if idx == 2:
+            break
+        
+        query_string += CommandProcessor.humanify(rs.result)
+        if idx == 0:
+            query_string += " is "
+    return query_string
   
   @staticmethod
   def extractCommand(command):
@@ -24,10 +51,16 @@ class CommandProcessor(models.Model):
 
     if entities[0] in ["resume", "play"]:
       return {'command': 'resume'}
+  
+    if entities[0] in ["what", "ask", "what's"]:
+        entities.pop(0)
+        question = " ".join(entities)
+        query = wolframalpha.WolframAlpha(question)
+        query_string = CommandProcessor.processWolframAlphaResult(query)
+        return {'command':'ask', 'data': query_string }
 
     #check for weather
     for entity in entities:
-      print entity
       if entity == "weather":
         return {"command": "weather"}
 
@@ -39,7 +72,10 @@ class CommandProcessor(models.Model):
       return True
     else:
       return False
-
+  
+  
+    
+      
   # @staticmethod
   # def entities(command):
   #   tokens = nltk.word_tokenize(command)

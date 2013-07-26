@@ -36,6 +36,8 @@ def process_command(request):
         response_data = {'action': "pause"}
     elif extractedCommand["command"] == "resume":
         response_data = {'action': "resume"}
+    elif extractedCommand["command"] == "ask":
+        response_data = {'speak':extractedCommand["data"]}
     else:
         response_data = {'speak': 'That command is not yet avaliable or was stated in a way I do not understand'}
     return HttpResponse(simplejson.dumps(response_data), content_type="application/json") 
