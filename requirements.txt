@@ -7,5 +7,5 @@ gunicorn==17.5
 lxml==3.2.1
 psycopg2==2.5.1
 static==0.4
-/wolfram_alpha/liato-wolframalpha-2a62d56.zip
+git+git@github.com:liato/wolframalpha.git
 wsgiref==0.1.2
