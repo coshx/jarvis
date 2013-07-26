@@ -33,13 +33,21 @@ class CommandProcessor(models.Model):
   
   @staticmethod
   def extractCommand(command):
-    # Jarvis/Travis what is the weather
     if not CommandProcessor.isCommand(command):
       return False
     command = command.split(' ',1)[1] #removes jarvis from the command
     
     # entities = CommandProcessor.entities(command)
     entities = command.split(' ')
+    
+    #check for weather
+    for entity in entities:
+      if entity == "weather":
+        return {"command": "weather"}
+      if entity == "temp" or entity == "temperature":
+          return {"command":"temperature"}
+      if entity == "wind":
+          return {"command":"wind"}
     
     #check for music
     if entities[0] == "play" and len(entities) > 1:
@@ -61,15 +69,6 @@ class CommandProcessor(models.Model):
         query = wolframalpha.WolframAlpha(question)
         query_string = CommandProcessor.processWolframAlphaResult(query)
         return {'command':'ask', 'data': query_string }
-
-    #check for weather
-    for entity in entities:
-      if entity == "weather":
-        return {"command": "weather"}
-      if entity == "temp" or entity == "temperature":
-          return {"command":"temperature"}
-      if entity == "wind":
-          return {"command":"wind"}
 
     return {"command": "unknown"}
   
