@@ -35,11 +35,18 @@
                     	} else if (typeof(response.action) !== 'undefined') {
                     		if (response.action == "youtube" && response.data !== "") {
                     			var ytubeurl = response.data;
+                    			$('#youtube').html("");
                     			pop = Popcorn.youtube('#youtube','http://www.youtube.com/watch?v='+ytubeurl);
+                    			pop.play();
+                    			pop.pause(); //hackjobby way to prevent memory errors / video skipping
                     			pop.play();
                     		} else if (response.action == "pause") {
                     			pop.pause();
+                    			pop.play(); //hackjobby way to prevent memory errors / video skipping
+                    			pop.pause();
                     		} else if (response.action == "resume") {
+                    			pop.play();
+                    			pop.pause(); //hackjobby way to prevent memory errors / video skipping
                     			pop.play();
                     		}
                     	}
