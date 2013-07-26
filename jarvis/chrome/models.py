@@ -15,12 +15,15 @@ class CommandProcessor(models.Model):
     entities = command.split(' ')
     
     #check for music
-    if entities[0] == "play":
+    if entities[0] == "play" and entities.length > 1:
       entities.pop(0) #remove play
       return {'command': 'play', 'data': urllib.quote(' '.join(entities))}
 
-    if entities[0] == "pause" or entities[0] == "paws" or entities[0] == "popeyes":
+    if entities[0] == "pause" or entities[0] == "paws" or entities[0] == "popeyes" or entities[0] == "pies":
       return {'command': 'pause'}
+
+    if entities[0] == "resume" or entities[0] == "play":
+      return {'command': 'resume'}
 
     #check for weather
     for entity in entities:
@@ -32,7 +35,7 @@ class CommandProcessor(models.Model):
   
   @staticmethod
   def isCommand(command):
-    if command.split(" ")[0].lower() == "travis" or command.split(" ")[0].lower() == "jarvis":
+    if command.split(" ")[0].lower() == "travis" or command.split(" ")[0].lower() == "jarvis" or command.split(" ")[0].lower() == "jaris":
       return True
     else:
       return False
