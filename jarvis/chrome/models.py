@@ -19,6 +19,9 @@ class CommandProcessor(models.Model):
       entities.pop(0) #remove play
       return {'command': 'play', 'data': urllib.quote(' '.join(entities))}
 
+    if "pause" in entities:
+      return {'command': 'pause'}
+
     #check for weather
     for entity in entities:
       print entity

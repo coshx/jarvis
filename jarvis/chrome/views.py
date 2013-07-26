@@ -31,7 +31,9 @@ def process_command(request):
     elif extractedCommand["command"] == "play":
         youtubeData = urllib2.urlopen('https://www.googleapis.com/youtube/v3/search?q='+extractedCommand['data']+'&key=AIzaSyBL6aPKYByygs9oHB5rStYhTBKtklqRkrI&part=snippet').read()
         youtubeData_url = json.loads(youtubeData)['items'][0]['id']['videoId'];
-        response_data = {'youtube':youtubeData_url}
+        response_data = {'action': 'youtube', 'data': youtubeData_url}
+    elif extractedCommand["command"] == "pause":
+        response_data = {'action': "pause"}
     else:
         response_data = {'speak': 'That command is not yet avaliable or was stated in a way I do not understand'}
     return HttpResponse(simplejson.dumps(response_data), content_type="application/json") 
