@@ -26,8 +26,20 @@ def process_command(request):
     print extractedCommand
     if extractedCommand["command"] == "weather":
         weatherData = urllib2.urlopen("http://api.openweathermap.org/data/2.5/find?q=Boulder,co&units=imperial").read()
-        weatherData_temp = json.loads(weatherData)['list'][0]['main']['temp']
-        response_data = {'speak': 'It is ' + str(weatherData_temp) + ' degrees outside'}
+        weatherData_temp_avg = json.loads(weatherData)['list'][0]['main']['temp']
+        weatherData_weather_desc = json.loads(weatherData)['list'][0]['weather'][0]['description']
+        response_data = {'speak': 'It is ' + str(weatherData_temp_avg) + ' degrees outside with ' + str(weatherData_weather_desc) + "."}
+    elif extractedCommand["command"] == "temperature":
+        weatherData = urllib2.urlopen("http://api.openweathermap.org/data/2.5/find?q=Boulder,co&units=imperial").read()
+        weatherData_temp_avg = json.loads(weatherData)['list'][0]['main']['temp']
+        weatherData_temp_high = json.loads(weatherData)['list'][0]['main']['temp_max']
+        weatherData_temp_low = json.loads(weatherData)['list'][0]['main']['temp_min']
+        response_data = {'speak':'It is ' + str(weatherData_temp_avg) + ' degrees outside with a high of '+str(weatherData_temp_high)+' degrees and a low of '+str(weatherData_temp_low) + ' degrees.'}
+    elif extractedCommand['command'] == "wind":
+        weatherData = urllib2.urlopen("http://api.openweathermap.org/data/2.5/find?q=Boulder,co&units=imperial").read()
+        weatherData_wind_speed = json.loads(weatherData)['list'][0]['wind']['speed']
+        weatherData_wind_heading = json.loads(weatherData)['list'][0]['wind']['deg']
+        response_data = {'speak':'The wind speed is currently ' + str(weatherData_wind_speed) + " miles per hour with heading " + str(weatherData_wind_heading) + "."}
     elif extractedCommand['command'] == "play":
         youtubeData = urllib2.urlopen('https://www.googleapis.com/youtube/v3/search?q='+extractedCommand['data']+'&key=AIzaSyBL6aPKYByygs9oHB5rStYhTBKtklqRkrI&part=snippet').read()
         youtubeData_url = json.loads(youtubeData)['items'][0]['id']['videoId'];

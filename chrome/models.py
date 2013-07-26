@@ -45,13 +45,16 @@ class CommandProcessor(models.Model):
     if entities[0] == "play" and len(entities) > 1:
       entities.pop(0) #remove play
       return {'command': 'play', 'data': urllib.quote(' '.join(entities))}
-
+  
+    #check for pause command
     if entities[0] in ["pause", "paws", "popeyes", "Paz", "pies", "pa"]:
       return {'command': 'pause'}
 
+    #check for resume command
     if entities[0] in ["resume", "play"]:
       return {'command': 'resume'}
   
+    #check for wolfram alpha question
     if entities[0] in ["what", "ask", "what's"]:
         entities.pop(0)
         question = " ".join(entities)
@@ -63,6 +66,10 @@ class CommandProcessor(models.Model):
     for entity in entities:
       if entity == "weather":
         return {"command": "weather"}
+      if entity == "temp" or entity == "temperature":
+          return {"command":"temperature"}
+      if entity == "wind":
+          return {"command":"wind"}
 
     return {"command": "unknown"}
   
