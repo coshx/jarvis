@@ -51,7 +51,7 @@ class CommandProcessor(models.Model):
       if entity == "time":
           return {'command':'time'}
       if entity == "volume":
-          return {'command':'volume','data': urllib.quote(' '.join(entities))}
+          return {'command':'volume','data':' '.join(entities)}
     
     #check for music
     if entities[0] == "play" and len(entities) > 1:

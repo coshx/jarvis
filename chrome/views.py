@@ -50,7 +50,7 @@ def process_command(request):
     elif extractedCommandName == "resume":
         response_data = {'command':'playerAction','data':"resume"}
     elif extractedCommandName == "volume":
-        numberRegex = r'/\d+/g'
+        print extractedCommand['data']
         volume = int(re.search('\d+',extractedCommand['data']).group(0))
         response_data = {'command':'playerAction','data': ['volume',volume]}
     elif extractedCommandName == "ask":

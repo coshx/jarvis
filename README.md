@@ -6,12 +6,15 @@ Uses webkit speech interpretation and natural language processing to execute voi
 Jarvis only responds to commands prefaced with "jarvis".
 Currently implemenented commands:
 ---
+
 -weather: gives the temperature and weather state.
 -temperature: gives the current temperature, with a high and low for today.
 -wind: gives the current wind speed, with a direction heading
 -play (parameters): searches youtube using the parameters you've given it and plays the first video returned from the search
 -pause: if there's a video playing, this command pauses it.
 -resume: if there's a video that's been paused, this command resumes it.
+-volume (arg): sets the volume to whatever you specify, as a percentage.
+-time: gives the time on your machine
 -ask (question): returns what Wolfram|Alpha returns for your question.
 
 All of these commands have aliases and natural language processing is built in, so you can say "jarvis, what is the weather like?" or "jarvis, how's the weather", and on and on.
