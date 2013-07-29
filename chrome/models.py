@@ -59,8 +59,21 @@ class CommandProcessor(models.Model):
       return {'command': 'pause'}
 
     #check for resume command
-    if entities[0] in ["resume", "play"]:
+    if entities[0] in ["resume", "play", "repeat"]:
       return {'command': 'resume'}
+  
+    #check for volume command
+#     if entities[0]=="volume" or entities[1]=="volume" or entities[2]=="volume":
+#         if entities[2]=="volume" and len(entities) > 3:
+#             entities.pop(2)
+#             entities.pop(1)
+#             entities.pop(0)
+#         if entities[1]=="volume" and len(entities) > 2:
+#             entities.pop(1)
+#             entities.pop(0)
+#         if entities[0]=="volume" and len(entities) > 1:
+#             entities.pop(0)
+#         return {'command':'volume','data': urllib.quote(' '.join(entities))}
   
     #check for wolfram alpha question
     if entities[0] in ["what", "ask", "what's"]:

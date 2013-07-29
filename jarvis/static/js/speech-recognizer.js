@@ -29,22 +29,27 @@
                     data: {q: command},
                     success:function(response) {
                     	$("#speech-page-content").val("");
-                    	if(typeof(response.speak) !== 'undefined'){
-                    	    speak(response.speak,{noWorker:true});
-                    	    insertAtCaret(textAreaID, response["speak"]);
-                    	} else if (typeof(response.action) !== 'undefined') {
-                    		if (response.action == "youtube" && response.data !== "") {
-                    			var ytubeurl = response.data;
-                    			$('#youtube').html("");
-                    			pop = Popcorn.youtube('#youtube','http://www.youtube.com/watch?v='+ytubeurl);
-                    			pop.play();
-                    			pop.pause(); //hackjobby way to prevent memory errors / video skipping
-                    			pop.play();
-                    		} else if (response.action == "pause") {
+                    	command = response.command;
+                    	data = response.data;
+                    	if(command == "speak"){
+                    	    speakAndInsert(response.data);
+                    	} else if (command == "playerAction") {
+                    		if (data instanceof Array) {
+                    			if (data[0] == "play") {
+                    				var ytubeurl = data[1];
+                    				$('#youtube').html("");
+                    				pop = Popcorn.youtube('#youtube','http://www.youtube.com/watch?v='+ytubeurl);
+                    				pop.play();
+                    				pop.pause(); //hackjobby way to prevent memory errors / video skipping
+                    				pop.play();
+                    			} else if (data[0]=="volume") {
+                    				pop.setVolume(data[1])
+                    			}
+                    		} else if (data == "pause") {
                     			pop.pause();
                     			pop.play(); //hackjobby way to prevent memory errors / video skipping
                     			pop.pause();
-                    		} else if (response.action == "resume") {
+                    		} else if (data == "resume") {
                     			pop.play();
                     			pop.pause(); //hackjobby way to prevent memory errors / video skipping
                     			pop.play();
@@ -62,5 +67,10 @@
             console.log("BAD- the recognition ended");
             recognition.start(); //lets just start it again...NEVER...STOP...LISTENING
         };
+        
+        function speakAndInsert(text) {
+        	speak(text,{noWorker:true});
+        	$('#speech-page-content').val(text);
+        }
     });
 })(jQuery);
