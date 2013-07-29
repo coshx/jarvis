@@ -1,5 +1,5 @@
+var pop;
 (function($) {
-	var pop;
     $(document).ready(function() {
         try {
             var recognition = new webkitSpeechRecognition();
@@ -31,8 +31,12 @@
                     	$("#speech-page-content").val("");
                     	command = response.command;
                     	data = response.data;
-                    	if(command == "speak"){
-                    	    speakAndInsert(response.data);
+                    	if(command == "speak") {
+                    		if (data == "time") {
+                    			processTimeCommand();
+                    		} else {
+                    	    	speakAndInsert(data);
+                    	   	}
                     	} else if (command == "playerAction") {
                     		if (data instanceof Array) {
                     			if (data[0] == "play") {
@@ -42,8 +46,9 @@
                     				pop.play();
                     				pop.pause(); //hackjobby way to prevent memory errors / video skipping
                     				pop.play();
+                    				console.log(pop);
                     			} else if (data[0]=="volume") {
-                    				pop.setVolume(data[1])
+                    				processVolumeCommand(data[1]);
                     			}
                     		} else if (data == "pause") {
                     			pop.pause();
@@ -71,6 +76,39 @@
         function speakAndInsert(text) {
         	speak(text,{noWorker:true});
         	$('#speech-page-content').val(text);
+        }
+        
+        function insertToTextarea(text) {
+        	$('#speech-page-content').val(text);
+        }
+        
+        function processTimeCommand() {
+        	var today = new Date();
+        	var h = today.getHours();
+        	var m = today.getMinutes();
+        	var pm = false;
+        	var h_s,m_s;
+        	if (h > 12) {
+        		pm = true;
+        		h = h%12;
+        	}
+        	h_s=h;
+        	m_s=m;
+        	if (h<10) h_s = "0"+h;
+        	if (m<10) m_s = "0"+m;
+        	var timeString = (pm)? h_s+":"+m_s+" pm" : h_s+":"+m_s+" am";
+        	insertToTextarea("The current time is: " +timeString);
+        	if (m<10) m_s = "oh "+m;
+        	timeString = (pm)? h_s+" "+m_s+" p.m." : h_s+" "+m_s+" a.m.";
+        	speak("The current time is: "+timeString);
+        }
+        function processVolumeCommand(str) {
+        	str = unescape(str);
+        	var numberRegex = /\d+/g;
+        	var percent = parseInt(str.match(numberRegex)[0],10);
+        	console.log(str);
+        	console.log(percent);
+        	pop.options.youtubeObject = pop.options.youtubeObject.setVolume(percent);
         }
     });
 })(jQuery);
