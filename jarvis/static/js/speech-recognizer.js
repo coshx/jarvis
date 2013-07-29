@@ -48,7 +48,8 @@ var pop;
                     				pop.play();
                     				console.log(pop);
                     			} else if (data[0]=="volume") {
-                    				processVolumeCommand(data[1]);
+                    				console.log(data[1]);
+                    				pop.options.youtubeObject = pop.options.youtubeObject.setVolume(data[1]);
                     			}
                     		} else if (data == "pause") {
                     			pop.pause();
@@ -101,14 +102,6 @@ var pop;
         	if (m<10) m_s = "oh "+m;
         	timeString = (pm)? h_s+" "+m_s+" p.m." : h_s+" "+m_s+" a.m.";
         	speak("The current time is: "+timeString);
-        }
-        function processVolumeCommand(str) {
-        	str = unescape(str);
-        	var numberRegex = /\d+/g;
-        	var percent = parseInt(str.match(numberRegex)[0],10);
-        	console.log(str);
-        	console.log(percent);
-        	pop.options.youtubeObject = pop.options.youtubeObject.setVolume(percent);
         }
     });
 })(jQuery);

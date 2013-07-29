@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 from django.utils import simplejson
-import json, urllib2
+import json, urllib2, re
 from chrome.models import CommandProcessor
 
 def home(request):
@@ -50,7 +50,9 @@ def process_command(request):
     elif extractedCommandName == "resume":
         response_data = {'command':'playerAction','data':"resume"}
     elif extractedCommandName == "volume":
-        response_data = {'command':'playerAction','data': ['volume',extractedCommand['data']]}
+        numberRegex = r'/\d+/g'
+        volume = int(re.search('\d+',extractedCommand['data']).group(0))
+        response_data = {'command':'playerAction','data': ['volume',volume]}
     elif extractedCommandName == "ask":
         response_data = {'command':'speak','data':extractedCommand["data"]}
     elif extractedCommandName == "time":
