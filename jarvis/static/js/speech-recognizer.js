@@ -30,7 +30,7 @@ var pop;
                     url: "process_command/",
                     data: {q: command},
                     success:function(response) {
-                    	$("#speech-page-content").val("");
+                    	//$("#speech-page-content").val("");
                     	command = response.command;
                     	data = response.data;
                     	if(command == "speak") {
@@ -77,12 +77,12 @@ var pop;
             recognition.start(); //lets just start it again...NEVER...STOP...LISTENING
         };
         
-        function speakAndInsert(text) {
-        	speak(text,{noWorker:true});
-        	insertToTextarea(text);
+        function insertToTextarea(text) {
+        	document.getElementById('speech-page-content').innerHTML += text.trim() + "\n";
         }
         
-        function insertToTextarea(text) {
+        function speakAndInsert(text) {
+        	speak(text,{noWorker:true});
         	document.getElementById('speech-page-content').innerHTML += text.trim() + "\n";
         }
         

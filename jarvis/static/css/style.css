@@ -79,47 +79,10 @@ article {
 	background-position:center;
 }
 
-#speech-page-content:focus {
+#speech-page-content:focus, #speech-input-content:focus {
     outline: none;
 }
 
 #youtube {
 	margin:auto;
-}
-
-.speech-content-mic {
-    width: 25px;
-    height: 25px;
-    cursor:pointer;
-    position: absolute;
-    right: 0;
-    top: 0;
-}
-
-.speech-mic {
-    background: url("../img/mic.gif") no-repeat 50% 50%;
-    background-size: contain;
-}
-
-.speech-mic-works {
-    background: url("../img/mic-animate.gif") no-repeat 50% 50%;
-    background-size: contain;
-}
-
-#authority {
-    padding-top: 10px;
-}
-
-#speech-page-content::-webkit-scrollbar {
-    width: 6px;
-}
-
-#speech-page-content::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-    border-radius: 10px;
-}
-
-#speech-page-content::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
 }
