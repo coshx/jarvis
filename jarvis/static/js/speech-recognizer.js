@@ -22,6 +22,8 @@ var pop;
             if(event.results[currentIndex].isFinal){
                 var command = event.results[currentIndex][0].transcript;
                 console.log(command);
+                //$('#speech-input-content').text(command);
+                document.getElementById('speech-input-content').innerHTML += command.trim() + "\n";
                 console.log("confidence: " + event.results[currentIndex][0].confidence);
                 $.ajax({
                     type: "GET",
@@ -42,6 +44,7 @@ var pop;
                     			if (data[0] == "play") {
                     				var ytubeurl = data[1];
                     				$('#youtube').html("");
+                    				insertToTextarea("Now playing.");
                     				pop = Popcorn.youtube('#youtube','http://www.youtube.com/watch?v='+ytubeurl);
                     				pop.play();
                     				pop.pause(); //hackjobby way to prevent memory errors / video skipping
@@ -76,11 +79,11 @@ var pop;
         
         function speakAndInsert(text) {
         	speak(text,{noWorker:true});
-        	$('#speech-page-content').val(text);
+        	insertToTextarea(text);
         }
         
         function insertToTextarea(text) {
-        	$('#speech-page-content').val(text);
+        	document.getElementById('speech-page-content').innerHTML += text.trim() + "\n";
         }
         
         function processTimeCommand() {
