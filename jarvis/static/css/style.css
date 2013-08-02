@@ -85,4 +85,7 @@ article {
 
 #youtube {
 	margin:auto;
+	width:600px;
+	height:400px;
+	padding:15 0 15 0;
 }
